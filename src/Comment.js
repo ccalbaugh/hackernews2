@@ -1,3 +1,8 @@
+import React from 'react';
+
+const formatDate = (date) =>
+  date.toLocaleDateString();
+
 function Comment(props) {
   return (
     <div className="Comment">
@@ -12,8 +17,8 @@ function Comment(props) {
   );
 }
 
-const Avatar = ({ user.avatarUrl, user.name }) =>
-    <img className="Avatar" src={user.avatar} alt={user.name} />
+const Avatar = (props) =>
+    <img className="Avatar" src={props.user.avatarUrl} alt={props.user.name} />
 
 const UserInfo = (props) => {
   return (
@@ -25,8 +30,5 @@ const UserInfo = (props) => {
     </div>
   );
 }
-
-const formatDate = (date) =>
-  date.toLocaleDateString();
 
 export default Comment;

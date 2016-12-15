@@ -26,6 +26,15 @@ const isSearched = (query) => (item) => !query ||
             item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
             item.author.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 
+const comment = {
+  date: new Date(),
+  text: 'I hope you enjoy learning React!',
+  author: {
+    name: 'Hello Kitty',
+    avatarUrl: 'http://placekitten.com/g/64/64'
+  }
+};
+
 class App extends Component {
 
   constructor(props) {
@@ -54,6 +63,10 @@ class App extends Component {
         <Table list={list} pattern={query} />
         <SignUpDialog />
         <Toggle />
+        <Comment
+            date={comment.date}
+            text={comment.text}
+            author={comment.author} />
       </div>
     );
   }

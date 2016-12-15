@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Toggle from './Toggle.js';
 
 const list = [
   {
@@ -24,7 +25,6 @@ const isSearched = (query) => (item) => !query ||
             item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
             item.author.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 
-
 class App extends Component {
 
   constructor(props) {
@@ -33,6 +33,7 @@ class App extends Component {
     this.state = {
       list,
       query: '',
+      isToggleOn: true,
     };
 
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -59,6 +60,7 @@ class App extends Component {
             <span>{item.points}</span>
           </div>
         )}
+        <Toggle />
       </div>
     );
   }

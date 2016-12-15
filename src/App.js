@@ -54,9 +54,9 @@ class App extends Component {
   }
 
   render() {
-    const query = this.state.query;
+    const { query, list } = this.state;
     return (
-      <div className="App">
+      <div className="page">
         <Search value={query} onChange={this.onSearchChange}>
           Search
         </Search>

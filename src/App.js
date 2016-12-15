@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Toggle from './Toggle.js';
+import NameForm from './NameForm.js';
 
 const list = [
   {
@@ -60,6 +61,7 @@ class App extends Component {
             <span>{item.points}</span>
           </div>
         )}
+        <NameForm />
         <Toggle />
       </div>
     );

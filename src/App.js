@@ -20,13 +20,9 @@ const list = [
   },
 ];
 
-function isSearched(query) {
-  return function searchFilter(item) {
-    return !query ||
+const isSearched = (query) => (item) => !query ||
             item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
             item.author.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  }
-}
 
 
 class App extends Component {

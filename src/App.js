@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Toggle from './Toggle.js';
-// import NameForm from './NameForm.js';
-// import EssayForm from './EssayForm.js';
-// import FlavorForm from './FlavorForm.js';
 
 const list = [
   {

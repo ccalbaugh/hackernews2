@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Toggle from './Toggle.js';
+import Comment from './Comment.js';
 
 const list = [
   {

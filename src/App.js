@@ -57,16 +57,18 @@ class App extends Component {
     const { query, list } = this.state;
     return (
       <div className="page">
-        <Search value={query} onChange={this.onSearchChange}>
-          Search
-        </Search>
-        <Table list={list} pattern={query} />
-        <SignUpDialog />
-        <Toggle />
-        <Comment
-            date={comment.date}
-            text={comment.text}
-            author={comment.author} />
+          <div className="interactions">
+            <Search value={query} onChange={this.onSearchChange}>
+              Search
+            </Search>
+            <Table list={list} pattern={query} />
+            <SignUpDialog />
+            <Toggle />
+            <Comment
+                date={comment.date}
+                text={comment.text}
+                author={comment.author} />
+          </div>
       </div>
     );
   }
@@ -78,21 +80,38 @@ const Search = ({ value, onChange, children }) =>
     </form>
 
 
+const largeColumn = {
+  width: '40%'
+};
 
-const Table = ({ list, pattern }) => {
-  return (
-    <div>
+const midColumn = {
+  width: '30%'
+};
+
+const smallColumn = {
+  width: '15%'
+};
+
+
+const Table = ({ list, pattern }) =>
+  <div className="table">
     { list.filter(isSearched(pattern)).map((item) =>
-      <div key={item.objectID}>
-        <span><a href={item.url}>{item.title}</a></span>
-        <span>{item.author}</span>
-        <span>{item.num_comments}</span>
-        <span>{item.points}</span>
+      <div key={item.objectID} className="table-row">
+        <span style={{ width: '40%' }}>
+          <a href={item.url}>{item.title}</a>
+        </span>
+        <span style={largeColumn}>
+          {item.author}
+        </span>
+        <span style={midColumn}>
+          {item.num_comments}
+        </span>
+        <span style={smallColumn}>
+          {item.points}
+        </span>
       </div>
     )}
-    </div>
-  )
-}
+  </div>
 
 
 

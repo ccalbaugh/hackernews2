@@ -7,9 +7,9 @@ const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 
-const isSearched = (query) => (item) => !query ||
-            item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-            item.author.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+// const isSearched = (query) => (item) => !query ||
+//             item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+//             item.author.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 
 const comment = {
   date: new Date(),
@@ -69,7 +69,7 @@ class App extends Component {
             <Search value={query} onChange={this.onSearchChange} onSubmit={this.onSearchSubmit}>
               Search
             </Search>
-            { result ? <Table value={result.hits} pattern={query} /> : null }
+            { result && <Table list={result.hits} /> }
           </div>
       </div>
     );
@@ -96,9 +96,9 @@ const smallColumn = {
 };
 
 
-const Table = ({ list, pattern }) =>
+const Table = ({ list }) =>
   <div className="table">
-    { list.filter(isSearched(pattern)).map((item) =>
+    { list.map((item) =>
       <div key={item.objectID} className="table-row">
         <span style={largeColumn}>
           <a href={item.url}>{item.title}</a>
@@ -130,36 +130,6 @@ const Dialog = ({ title, message, children }) => {
       {children}
     </div>
   );
-}
-
-class SignUpDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
-    this.state = {login: ''};
-  }
-
-  render() {
-    return(
-      <Dialog title="Mars Exploration Program"
-              message="How should we refer to you?">
-        <input value={this.state.login}
-               onChange={this.handleChange} />
-        <button onClick={this.handleSignUp}>
-          Sign Me Up!
-        </button>
-      </Dialog>
-    );
-  }
-
-  handleChange(e) {
-    this.setState({login: e.target.value});
-  }
-
-  handleSignUp() {
-    alert(`Welcome aboard, ${this.state.login}!`);
-  }
 }
 
 export default App;

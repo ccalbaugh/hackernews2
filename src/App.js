@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 
 const DEFAULT_QUERY = 'redux';
+const DEFAULT_PAGE = 0;
 
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
+const PARAM_PAGE = 'page=';
 
 class App extends Component {
 
@@ -103,6 +105,12 @@ const Table = ({ list }) =>
       </div>
     )}
   </div>
+
+const Button = ({ onClick, children }) => {
+  <button onClick={onClick} type="button">
+    {children}
+  </button>
+}
 
 
 export default App;

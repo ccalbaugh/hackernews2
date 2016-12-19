@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Toggle from './Toggle.js';
-import Comment from './Comment.js';
-import Clock from './Clock.js';
 
 const DEFAULT_QUERY = 'redux';
 
@@ -36,6 +33,7 @@ class App extends Component {
     this.setSearchTopstories = this.setSearchTopstories.bind(this);
     this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.onSearchSubmit = this.onSearchSubmit.bind(this);
   }
 
   setSearchTopstories(result) {
@@ -43,6 +41,7 @@ class App extends Component {
   }
 
   fetchSearchTopstories() {
+    console.log(this.state);
     fetch(`${PATH_BASE}${PATH_SEARCH}?{PARAM_SEARCH}${query}`)
       .then(response => response.json())
       .then(result => this.setSearchTopstories(result));
@@ -57,12 +56,17 @@ class App extends Component {
     this.setState({ query: event.target.value });
   }
 
+  onSearchSubmit() {
+    const { query } = this.state;
+    this.fetchSearchTopstories(query);
+  }
+
   render() {
     const { query, result } = this.state;
     return (
       <div className="page">
           <div className="interactions">
-            <Search value={query} onChange={this.onSearchChange}>
+            <Search value={query} onChange={this.onSearchChange} onSubmit={this.onSearchSubmit}>
               Search
             </Search>
             { result ? <Table value={result.hits} pattern={query} /> : null }
@@ -72,9 +76,10 @@ class App extends Component {
   }
 }
 
-const Search = ({ value, onChange, children }) =>
-    <form>
+const Search = ({ value, onChange, onSubmit, children }) =>
+    <form onSubmit={onSubmit}>
       {children} <input type="text" value={value} onChange={onChange} />
+      <button type="submit">{children}</button>
     </form>
 
 
@@ -95,13 +100,13 @@ const Table = ({ list, pattern }) =>
   <div className="table">
     { list.filter(isSearched(pattern)).map((item) =>
       <div key={item.objectID} className="table-row">
-        <span style={{ width: '40%' }}>
+        <span style={largeColumn}>
           <a href={item.url}>{item.title}</a>
         </span>
-        <span style={largeColumn}>
+        <span style={midColumn}>
           {item.author}
         </span>
-        <span style={midColumn}>
+        <span style={smallColumn}>
           {item.num_comments}
         </span>
         <span style={smallColumn}>

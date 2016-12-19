@@ -7,10 +7,6 @@ const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 
-// const isSearched = (query) => (item) => !query ||
-//             item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-//             item.author.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-
 const comment = {
   date: new Date(),
   text: 'I hope you enjoy learning React!',
@@ -56,9 +52,10 @@ class App extends Component {
     this.setState({ query: event.target.value });
   }
 
-  onSearchSubmit() {
+  onSearchSubmit(event) {
     const { query } = this.state;
     this.fetchSearchTopstories(query);
+    event.preventDefault();
   }
 
   render() {
@@ -116,20 +113,5 @@ const Table = ({ list }) =>
     )}
   </div>
 
-
-
-const Dialog = ({ title, message, children }) => {
-  return (
-    <div className="Dialog">
-      <h1 className="Dialog-title">
-        {title}
-      </h1>
-      <p className="Dialog-message">
-        {message}
-      </p>
-      {children}
-    </div>
-  );
-}
 
 export default App;

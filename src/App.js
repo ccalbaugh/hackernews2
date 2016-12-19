@@ -27,18 +27,19 @@ class App extends Component {
 
   setSearchTopstories(result) {
     this.setState({ result });
+    const { query } = this.state;
   }
 
   fetchSearchTopstories() {
     console.log(this.state);
-    fetch(`${PATH_BASE}${PATH_SEARCH}?{PARAM_SEARCH}${query}`)
+    fetch(`${PATH_BASE}${PATH_SEARCH}?{PARAM_SEARCH}${query}&&{PARAM_PAGE}${page}`)
       .then(response => response.json())
       .then(result => this.setSearchTopstories(result));
   }
 
   componentDidMount() {
     const { query } = this.state;
-    this.fetchSearchTopstories(query);
+    this.fetchSearchTopstories(query, DEFAULT_PAGE);
   }
 
   onSearchChange(event) {
@@ -47,20 +48,26 @@ class App extends Component {
 
   onSearchSubmit(event) {
     const { query } = this.state;
-    this.fetchSearchTopstories(query);
+    this.fetchSearchTopstories(query, DEFAULT_PAGE);
     event.preventDefault();
   }
 
   render() {
     const { query, result } = this.state;
+    const page = (result && result.page) || 0;
     return (
       <div className="page">
+        <div className="interactions">
+          <Search value={query} onChange={this.onSearchChange} onSubmit={this.onSearchSubmit}>
+            Search
+          </Search>
+          { result && <Table list={result.hits} /> }
           <div className="interactions">
-            <Search value={query} onChange={this.onSearchChange} onSubmit={this.onSearchSubmit}>
-              Search
-            </Search>
-            { result && <Table list={result.hits} /> }
+            <Button onClick={() => this.fetchSearchTopstories(query, page + 1)}>
+              More
+            </Button>
           </div>
+        </div>
       </div>
     );
   }

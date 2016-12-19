@@ -7,15 +7,6 @@ const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 
-const comment = {
-  date: new Date(),
-  text: 'I hope you enjoy learning React!',
-  author: {
-    name: 'Hello Kitty',
-    avatarUrl: 'http://placekitten.com/g/64/64'
-  }
-};
-
 class App extends Component {
 
   constructor(props) {

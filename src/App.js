@@ -3,13 +3,13 @@ import './App.css';
 
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_PAGE = 0;
-const DEFAULT_HPP ='100';
+const DEFAULT_HPP = '100';
 
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
-const PARAM_HPP = 'hitsPerPage';
+const PARAM_HPP = 'hitsPerPage=';
 
 class App extends Component {
 
@@ -17,7 +17,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      result: null,
+      results: null,
       query: DEFAULT_QUERY,
     };
 
@@ -29,11 +29,14 @@ class App extends Component {
 
   setSearchTopstories(result) {
     const { hits, page } = result;
+    const { query } = this.state;
 
-    const oldHits = result === 0 ? [] : this.state.result.hits;
+    const oldHits = page === 0 ? [] : this.state.results[query].hits;
     const updatedHits = [ ...oldHits, ...hits ];
 
-    this.setState({ result: { hits: updatedHits, page } });
+    this.setState({
+      results: { ...this.state.results, [query]: { hits: updatedHits, page } }
+    });
   }
 
   fetchSearchTopstories() {
@@ -59,20 +62,21 @@ class App extends Component {
   }
 
   render() {
-    const { query, result } = this.state;
-    const page = (result && result.page) || 0;
+    const { query, results } = this.state;
+    const page = (results && results[query] && results[query].page) || 0;
+    const list = (results && results[query] && results[query].hits) || [];
     return (
       <div className="page">
         <div className="interactions">
           <Search value={query} onChange={this.onSearchChange} onSubmit={this.onSearchSubmit}>
             Search
           </Search>
-          { result && <Table list={result.hits} /> }
-          <div className="interactions">
-            <Button onClick={() => this.fetchSearchTopstories(query, page + 1)}>
-              More
-            </Button>
-          </div>
+        </div>
+        <Table list={list} />
+        <div className="interactions">
+          <Button onClick={() => this.fetchSearchTopstories(query, page + 1)}>
+            More
+          </Button>
         </div>
       </div>
     );

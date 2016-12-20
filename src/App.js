@@ -24,6 +24,7 @@ class App extends Component {
 
     this.setSearchTopstories = this.setSearchTopstories.bind(this);
     this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
+    this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
   }
@@ -47,6 +48,10 @@ class App extends Component {
       .then(result => this.setSearchTopstories(result));
   }
 
+  needsToSearchTopStories(query) {
+    return !this.state.results[query];
+  }
+
   componentDidMount() {
     const { query } = this.state;
     this.setState({ searchKey: query });
@@ -60,7 +65,9 @@ class App extends Component {
   onSearchSubmit(event) {
     const { query } = this.state;
     this.setState({ searchKey: query });
-    this.fetchSearchTopstories(query, DEFAULT_PAGE);
+    if (this.needsToSearchTopStories(query)) {
+      this.fetchSearchTopstories(query, DEFAULT_PAGE);
+    }
     event.preventDefault();
   }
 

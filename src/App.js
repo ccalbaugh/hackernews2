@@ -40,7 +40,7 @@ class App extends Component {
     });
   }
 
-  fetchSearchTopstories() {
+  fetchSearchTopstories(query, page) {
     fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
 
       .then(response => response.json())

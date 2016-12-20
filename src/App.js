@@ -126,11 +126,10 @@ const Table = ({ list }) =>
     )}
   </div>
 
-const Button = ({ onClick, children }) => {
+const Button = ({ onClick, children }) =>
   <button onClick={onClick} type="button">
     {children}
   </button>
-}
 
 
 export default App;

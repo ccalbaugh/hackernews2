@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       results: null,
       query: DEFAULT_QUERY,
+      searchKey: '',
     };
 
     this.setSearchTopstories = this.setSearchTopstories.bind(this);
@@ -29,13 +30,13 @@ class App extends Component {
 
   setSearchTopstories(result) {
     const { hits, page } = result;
-    const { query } = this.state;
+    const { searchKey } = this.state;
 
-    const oldHits = page === 0 ? [] : this.state.results[query].hits;
+    const oldHits = page === 0 ? [] : this.state.results[searchKey].hits;
     const updatedHits = [ ...oldHits, ...hits ];
 
     this.setState({
-      results: { ...this.state.results, [query]: { hits: updatedHits, page } }
+      results: { ...this.state.results, [searchKey]: { hits: updatedHits, page } }
     });
   }
 
@@ -48,6 +49,7 @@ class App extends Component {
 
   componentDidMount() {
     const { query } = this.state;
+    this.setState({ searchKey: query });
     this.fetchSearchTopstories(query, DEFAULT_PAGE);
   }
 
@@ -57,14 +59,15 @@ class App extends Component {
 
   onSearchSubmit(event) {
     const { query } = this.state;
+    this.setState({ searchKey: query });
     this.fetchSearchTopstories(query, DEFAULT_PAGE);
     event.preventDefault();
   }
 
   render() {
-    const { query, results } = this.state;
-    const page = (results && results[query] && results[query].page) || 0;
-    const list = (results && results[query] && results[query].hits) || [];
+    const { query, results, searchKey } = this.state;
+    const page = (results && results[searchKey] && results[searchKey].page) || 0;
+    const list = (results && results[searchKey] && results[searchKey].hits) || [];
     return (
       <div className="page">
         <div className="interactions">
@@ -74,7 +77,7 @@ class App extends Component {
         </div>
         <Table list={list} />
         <div className="interactions">
-          <Button onClick={() => this.fetchSearchTopstories(query, page + 1)}>
+          <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
             More
           </Button>
         </div>

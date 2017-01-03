@@ -198,20 +198,17 @@ const SORTS = {
 };
 
 const Sort = ({ sortKey, activeSortKey, onSort, children }) => {
-  const sortClass = ['button-inline'];
-
-  if (sortKey === activeSortKey) {
-    sortClass.push('button-active');
-  }
+  const sortClass = classNames(
+    'button-inline',
+    { 'button-active' : sortKey === activeSortKey }
+  );
 
   return (
-    <Button onClick={() => onSort(sortKey)} className="button-inline">
+    <Button onClick={() => onSort(sortKey)} className={sortClass} type="button">
       {children}
     </Button>
   );
 }
-
-
 
 export default App;
 

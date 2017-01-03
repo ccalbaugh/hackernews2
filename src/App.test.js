@@ -37,22 +37,22 @@ describe('Search', () => {
 
 });
 
-// describe('Button', () => {
+describe('Button', () => {
 
-// 	it('renders', () => {
-// 		const div = document.createElement('div');
-// 		ReactDOM.render(<Button>Give Me More</Button>, div);
-// 	});
+	it('renders', () => {
+		const div = document.createElement('div');
+		ReactDOM.render(<Button>Give Me More</Button>, div);
+	});
 
-// 	test('snapshots', () => {
-// 		const component = renderer.create(
-// 			<Button>Give Me More</Button>
-// 		);
-// 		let tree = component.toJSON();
-// 		expect(tree).toMatchSnapshot();
-// 	});
+	test('snapshots', () => {
+		const component = renderer.create(
+			<Button>Give Me More</Button>
+		);
+		let tree = component.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
 
-// });
+});
 
 // describe('Table', () => {
 // 	const props

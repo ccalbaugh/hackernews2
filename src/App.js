@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { sortBy } from 'lodash';
 
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_PAGE = 0;
@@ -150,6 +151,14 @@ const withLoading = (Component) => ({ isLoading, ...props }) =>
   isLoading ? <Loading /> : <Component { ...props } />;
 
 const ButtonWithLoading = withLoading(Button);
+
+const SORTS = {
+  NONE: list => list,
+  TITLE: list => sortBy(list, 'title'),
+  AUTHOR: list => sortBy(list, 'author'),
+  COMMENTS: list => sortBy(list, 'num_comments'),
+  POINTS: list => sortBy(list, 'points').reverse(),
+};
 
 export default App;
 

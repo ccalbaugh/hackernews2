@@ -127,7 +127,7 @@ const smallColumn = {
 
 const Table = ({ list, sortKey, onSort }) =>
   <div className="table">
-    <div key={item.objectID} className="table-row">
+    <div className="table-header">
       <span style={largeColumn}>
         <Sort sortKey={'TITLE'} onSort={onSort}>Title</Sort>
       </span>
@@ -159,8 +159,8 @@ const Table = ({ list, sortKey, onSort }) =>
     )}
   </div>
 
-const Button = ({ onClick, children }) =>
-  <button onClick={onClick} type="button">
+const Button = ({ onClick, className, children }) =>
+  <button onClick={onClick} className={className} type="button">
     {children}
   </button>
 
@@ -180,11 +180,10 @@ const SORTS = {
   POINTS: list => sortBy(list, 'points').reverse(),
 };
 
-const Sort = ({ sortKey, onSort, children }) => {
-  <Button onClick={() => onSort(sortKey)}>
+const Sort = ({ sortKey, onSort, children }) =>
+  <Button onClick={() => onSort(sortKey)} className="button-inline">
     {children}
   </Button>
-};
 
 export default App;
 

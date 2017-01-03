@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { sortBy } from 'lodash';
+import classNames from 'classnames';
 
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_PAGE = 0;
@@ -196,10 +197,21 @@ const SORTS = {
   POINTS: list => sortBy(list, 'points').reverse(),
 };
 
-const Sort = ({ sortKey, onSort, children }) =>
-  <Button onClick={() => onSort(sortKey)} className="button-inline">
-    {children}
-  </Button>
+const Sort = ({ sortKey, activeSortKey, onSort, children }) => {
+  const sortClass = ['button-inline'];
+
+  if (sortKey === activeSortKey) {
+    sortClass.push('button-active');
+  }
+
+  return (
+    <Button onClick={() => onSort(sortKey)} className="button-inline">
+      {children}
+    </Button>
+  );
+}
+
+
 
 export default App;
 

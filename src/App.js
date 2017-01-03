@@ -22,6 +22,7 @@ class App extends Component {
       query: DEFAULT_QUERY,
       searchKey: '',
       isLoading: false,
+      sortKey: 'NONE',
     };
 
     this.setSearchTopstories = this.setSearchTopstories.bind(this);
@@ -29,6 +30,7 @@ class App extends Component {
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
+    this.onSort = this.onSort.bind(this);
   }
 
   setSearchTopstories(result) {
@@ -75,8 +77,12 @@ class App extends Component {
     event.preventDefault();
   }
 
+  onSort(sortKey) {
+    this.setState({ sortKey });
+  }
+
   render() {
-    const { query, results, searchKey, isLoading } = this.state;
+    const { query, results, searchKey, isLoading, sortKey } = this.state;
     const page = (results && results[searchKey] && results[searchKey].page) || 0;
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
     return (
@@ -86,7 +92,7 @@ class App extends Component {
             Search
           </Search>
         </div>
-        <Table list={list} />
+        <Table list={list} sortKey={sortKey} onSort={this.onSort} />
         <div className="interactions">
           <ButtonWithLoading
             isLoading={isLoading}
@@ -119,9 +125,9 @@ const smallColumn = {
 };
 
 
-const Table = ({ list }) =>
+const Table = ({ list, sortKey, onSort }) =>
   <div className="table">
-    { list.map((item) =>
+    { SORTS[sortKey](list).map((item) =>
       <div key={item.objectID} className="table-row">
         <span style={largeColumn}>
           <a href={item.url}>{item.title}</a>
@@ -156,7 +162,7 @@ const SORTS = {
   NONE: list => list,
   TITLE: list => sortBy(list, 'title'),
   AUTHOR: list => sortBy(list, 'author'),
-  COMMENTS: list => sortBy(list, 'num_comments'),
+  COMMENTS: list => sortBy(list, 'num_comments').reverse(),
   POINTS: list => sortBy(list, 'points').reverse(),
 };
 

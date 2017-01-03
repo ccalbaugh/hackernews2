@@ -43,7 +43,6 @@ class App extends Component {
 
   fetchSearchTopstories(query, page) {
     fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
-
       .then(response => response.json())
       .then(result => this.setSearchTopstories(result));
   }
@@ -140,3 +139,9 @@ const Button = ({ onClick, children }) =>
 
 
 export default App;
+
+export {
+  Button,
+  Search,
+  Table,
+};

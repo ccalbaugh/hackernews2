@@ -127,6 +127,20 @@ const smallColumn = {
 
 const Table = ({ list, sortKey, onSort }) =>
   <div className="table">
+    <div key={item.objectID} className="table-row">
+      <span style={largeColumn}>
+        <Sort sortKey={'TITLE'} onSort={onSort}>Title</Sort>
+      </span>
+      <span style={midColumn}>
+        <Sort sortKey={'AUTHOR'} onSort={onSort}>Author</Sort>
+      </span>
+      <span style={smallColumn}>
+        <Sort sortKey={'COMMENTS'} onSort={onSort}>Comments</Sort>
+      </span>
+      <span style={smallColumn}>
+        <Sort sortKey={'POINTS'} onSort={onSort}>Points</Sort>
+      </span>
+    </div>
     { SORTS[sortKey](list).map((item) =>
       <div key={item.objectID} className="table-row">
         <span style={largeColumn}>
@@ -164,6 +178,12 @@ const SORTS = {
   AUTHOR: list => sortBy(list, 'author'),
   COMMENTS: list => sortBy(list, 'num_comments').reverse(),
   POINTS: list => sortBy(list, 'points').reverse(),
+};
+
+const Sort = ({ sortKey, onSort, children }) => {
+  <Button onClick={() => onSort(sortKey)}>
+    {children}
+  </Button>
 };
 
 export default App;
